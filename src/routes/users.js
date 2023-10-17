@@ -5,12 +5,13 @@ const { getUserModel } = require('../models/user');
 const { sequelize } = require('../models');
 const { Sequelize } = require('sequelize');
 
+const userSchema = object({
+  username: string().required(),
+  password: string().required(),
+});
+
 /* ADD USER. */
 router.post('/', async function (req, res, next) {
-  const userSchema = object({
-    username: string().required(),
-    password: string().required(),
-  });
   const user = req.body;
   try {
     userSchema.validateSync(user);
@@ -24,10 +25,6 @@ router.post('/', async function (req, res, next) {
 
 /* UPDATE USER. */
 router.put('/:id', async function (req, res, next) {
-  const userSchema = object({
-    username: string().required(),
-    password: string().required(),
-  });
   const user = req.body;
   try {
     if (!req?.params?.id) {
@@ -39,7 +36,8 @@ router.put('/:id', async function (req, res, next) {
         id: req.params.id,
       }
     });
-    res.json(user);
+    const result = await getUserModel(sequelize, Sequelize).findByPk(req.params.id);
+    res.json(result);
   } catch (error) {
     console.error(error)
     res.status(400).json({ error: true, messages: error.errors })
@@ -69,11 +67,6 @@ router.delete('/:id', async function (req, res, next) {
 
 /* GET ALL USERS */
 router.get('/', async function (req, res, next) {
-
-  const userSchema = object({
-    username: string().required(),
-    password: string().required(),
-  });
   const user = req.body;
   try {
     userSchema.validateSync(user);
@@ -93,6 +86,25 @@ router.get('/:id', async function (req, res, next) {
     }
     const result = await getUserModel(sequelize, Sequelize).findByPk(req.params.id);
     res.json(result);
+  } catch (error) {
+    console.error(error)
+    res.status(400).json({ error: true, messages: error.errors })
+  }
+});
+
+/* UPDATE USER. */
+router.post('/login', async function (req, res, next) {
+  const user = req.body;
+  try {
+    userSchema.validateSync(user);
+    const result = await getUserModel(sequelize, Sequelize)
+      .findOne({ where: { username: user.username, password: user.password } });
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(403).json({ error: true, messages: "Forbidden" })
+    }
+
   } catch (error) {
     console.error(error)
     res.status(400).json({ error: true, messages: error.errors })

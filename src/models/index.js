@@ -27,10 +27,6 @@ Object.keys(models).forEach((key) => {
 });
 
 
-// exports.module = { models };
-
-// exports.default = sequelize;
-
 const db = {};
 
 db.Sequelize = Sequelize;

@@ -1,0 +1,159 @@
+# MVP Test
+
+- Node
+- Express
+- Sequelize
+- Postgres
+
+# Environemnt configuration
+
+1. Create file .env on project root
+
+2. Add variables for Postgres DB connection
+
+DB_HOST=""
+DB_PORT=5432
+DB_USER="postgres"
+DB_PASSWORD=""
+DB_DATABASE=""
+
+3. Install dependencies
+
+npm install
+
+3. Start application
+
+npm run start
+
+# REST API
+
+# Create Account
+
+POST
+http://localhost:3000/users
+
+Request payload example
+{
+"username": "marcos vinicius",
+"password": "123"
+}
+
+Response payload example
+
+{
+"id": 6,
+"username": "marcos vinicius",
+"password": "123",
+"updatedAt": "2023-10-17T14:41:19.524Z",
+"createdAt": "2023-10-17T14:41:19.524Z"
+}
+
+# Login
+
+GET
+http://localhost:3000/users/login
+
+Request payload example
+{
+"username": "marcos vinicius",
+"password": "123"
+}
+
+Response payload example
+
+Status Code 200
+{
+"id": 6,
+"username": "marcos vinicius",
+"password": "123",
+"updatedAt": "2023-10-17T14:41:19.524Z",
+"createdAt": "2023-10-17T14:41:19.524Z"
+}
+
+Error response payload
+
+Status Code 403
+
+{
+"error": true,
+"messages": "Forbidden"
+}
+
+# Create Tasks
+
+POST
+http://localhost:3000/tasks
+
+Request payload example
+{
+"description": "Develop new UI",
+"user_id": 1
+}
+
+Response payload example
+
+Status Code 200
+
+{
+"id": 1,
+"description": "Develop new UI",
+"user_id": 1,
+"updatedAt": "2023-10-17T15:21:06.412Z",
+"createdAt": "2023-10-17T15:21:06.412Z"
+}
+
+# Edit Tasks
+
+PUT
+http://localhost:3000/tasks/{task id}
+
+Request payload example
+{
+"description": "Develop new UI",
+}
+
+Response payload example
+
+Status Code 200
+
+{
+"id": 1,
+"description": "Develop new UI",
+"user_id": 1,
+"updatedAt": "2023-10-17T15:21:06.412Z",
+"createdAt": "2023-10-17T15:21:06.412Z"
+}
+
+# Delete Tasks
+
+DELETE
+http://localhost:3000/tasks/{task id}
+
+Response payload example
+
+Status Code 200
+
+{
+"id": 1,
+"description": "Develop new UI",
+"user_id": 1,
+"updatedAt": "2023-10-17T15:21:06.412Z",
+"createdAt": "2023-10-17T15:21:06.412Z"
+}
+
+# View Task
+
+GET
+http://localhost:3000/tasks/{task id}
+
+Response payload example
+
+Status Code 200
+
+{
+"id": 1,
+"description": "Develop new UI",
+"user_id": 1,
+"updatedAt": "2023-10-17T15:21:06.412Z",
+"createdAt": "2023-10-17T15:21:06.412Z"
+}
